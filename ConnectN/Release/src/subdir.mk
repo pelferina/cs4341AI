@@ -4,6 +4,7 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
+../src/IDDFS.cpp \
 ../src/gameBoard.cpp \
 ../src/gameNode.cpp \
 ../src/gameTree.cpp \
@@ -13,6 +14,7 @@ CPP_SRCS += \
 ../src/superRandomPlayer.cpp 
 
 OBJS += \
+./src/IDDFS.o \
 ./src/gameBoard.o \
 ./src/gameNode.o \
 ./src/gameTree.o \
@@ -22,6 +24,7 @@ OBJS += \
 ./src/superRandomPlayer.o 
 
 CPP_DEPS += \
+./src/IDDFS.d \
 ./src/gameBoard.d \
 ./src/gameNode.d \
 ./src/gameTree.d \

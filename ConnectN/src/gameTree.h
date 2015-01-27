@@ -23,8 +23,11 @@ public:
 
 	gameNode* buildTree(gameNode &startNode, int depth, miniOrMaxi miniOrMax);
 
-	void printTree();
+	void printTree(int n);
 
+	const gameNode* getHeadGameState() const {
+		return headGameState;
+	}
 };
 
 

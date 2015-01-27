@@ -28,9 +28,6 @@ public:
 	// Start the Game
 	void startGame();
 
-	//Iterative-deepening depth-first search move generator
-	string IDDFS(gameBoard gameState, int depth);
-
 	//Process own turn
 	string processOwnTurn(gameBoard gameState);
 

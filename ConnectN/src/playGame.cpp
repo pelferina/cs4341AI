@@ -47,47 +47,16 @@ void playGame::startGame()
 
 	}
 }
-string playGame::IDDFS(gameBoard gameState, int depth)
-{
-	gameNode startNode(gameState);	//Creates a head node for the given state
-	gameTree tree(startNode);	//Creates a tree with the given head node
-	miniOrMaxi m = MAX;
-//			int depth = 3;
-	tree.buildTree(startNode,1, m);
-	gameNode *bestNode = tree.buildTree(startNode,2, m);
-//			tree.buildTree(startNode,3, m);
-	tree.printTree();
-	string move;
-	move = bestNode->getMove();
-	gameNode *node = bestNode->getParentNode();
 
-	while(node!=NULL)
-	{
-		node = node->getParentNode();
-		if(node==NULL)
-		{
-			cerr<<"\nsending out best move";
-			move = bestNode->getMove();
-		}
-	}
-
-	if(bestNode != NULL)
-		cerr<<"\nsuccess " << move <<"\n";
-
-	return move;
-}
 string playGame::processOwnTurn(gameBoard gameState)
 {
-		if ( globals.timeoutReached ) {	// check for timeout
-			cerr<<"timeout\n";	// ... TODO: Cut off test
-		} else {
+	IDDFS iddfs(gameState, 3);	// perform IDDFS
+	if ( globals.timeoutReached ) {	// check for timeout
+		cerr<<"timeout\n";
+		return iddfs.getMove();	//return best move so far
 
-			IDDFS(gameState, 5);
-
-//			tree.buildTree(new gameNode(gameState),2, m);
-		}
-		//Simply drop discs in column 1 for communication testing purposes
-		return "0 1";
+	}
+	return iddfs.getMove();	//return best move so far
 }
 
 // Process Opponent's turn

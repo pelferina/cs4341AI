@@ -15,6 +15,7 @@
 #include "gameBoard.h"
 #include "gameNode.h"
 #include "gameTree.h"
+#include "IDDFS.h"
 #include "superRandomPlayer.h"
 #include "playGame.h"
 
