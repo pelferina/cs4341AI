@@ -16,11 +16,11 @@ private:
 	float utilityValue;
 	gameBoard boardState;
 	vector<gameNode*> childrenNodes;
-	int col;
+	string move;
     int depth;
 
 public:
-    gameNode(gameBoard state, gameNode *parent, int column, int depth);
+    gameNode(gameBoard state, gameNode *parent, string move, int depth);
 
     //Root node constructor
     gameNode(gameBoard state);
@@ -49,12 +49,16 @@ public:
 		this->utilityValue = utilityValue;
 	}
 
-	const gameNode* getParentNode() const {
+	gameNode* getParentNode()  {
 		return parentNode;
 	}
 
 	const vector<gameNode*>& getChildrenNodes() const {
 		return childrenNodes;
+	}
+
+	const string& getMove() const {
+		return move;
 	}
 };
 

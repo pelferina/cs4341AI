@@ -7,13 +7,13 @@
 
 #include "main.h"
 
-gameNode::gameNode(gameBoard state, gameNode *parent, int column, int depth): utilityValue(0), boardState(state), childrenNodes(2*boardState.getWidth()), col(column), depth(0)
+gameNode::gameNode(gameBoard state, gameNode *parent, string mov, int depth): utilityValue(0), boardState(state), childrenNodes(2*boardState.getWidth()), move(mov), depth(0)
 {
 	this->parentNode = parent;
 }
 
 //Root node constructor
-gameNode::gameNode(gameBoard state):utilityValue(0), boardState(state), childrenNodes(2*boardState.getWidth()), col(-1), depth(0)
+gameNode::gameNode(gameBoard state):utilityValue(0), boardState(state), childrenNodes(2*boardState.getWidth()), move(" "), depth(0)
 {
 	this->parentNode = NULL;
 }

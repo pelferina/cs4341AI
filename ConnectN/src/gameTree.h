@@ -16,15 +16,14 @@
 class gameTree
 {
 private:
-	gameNode headGameState;
-	gameBoard testBoard;
-	int DepthSoFar;
+	gameNode *headGameState;
+
 public:
-	gameTree(gameBoard headState, gameBoard testState);
+	gameTree(gameNode &headState);
 
 	gameNode* buildTree(gameNode &startNode, int depth, miniOrMaxi miniOrMax);
 
-
+	void printTree();
 
 };
 

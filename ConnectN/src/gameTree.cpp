@@ -7,16 +7,16 @@
 
 #include "main.h"
 
-gameTree::gameTree(gameBoard headState, gameBoard testState): headGameState(headState), testBoard(testState), DepthSoFar(0)
+gameTree::gameTree(gameNode &headState)
 {
-
+	headGameState = &headState;
 }
 
 gameNode* gameTree::buildTree(gameNode &startNode, int depth, miniOrMaxi miniOrMax)
 {
 	gameNode *bestNode = NULL;
 	int count = 0;
-	// If the depth is 0, calculate the heuristic value of the root Node
+	// If the depth is 0, calculate the heuristic value of the given Node
 	if (depth == 0) {
 		gameBoard currGameBoard(startNode.getBoardState());
 		//Use the heuristic function to calculate its utility
@@ -27,35 +27,53 @@ gameNode* gameTree::buildTree(gameNode &startNode, int depth, miniOrMaxi miniOrM
 
 	// If depth is 1, create children Nodes and update the bestNode
 	else if (depth == 1) {
-		gameBoard currGameBoard(startNode.getBoardState());
 
+		gameBoard currGameBoard(startNode.getBoardState());
 		for (int i = 0; i < currGameBoard.getWidth(); i++) {
-			cerr<<"testing"<<endl;
-			currGameBoard.printBoard();
+
+
 			gameBoard popState(currGameBoard);
 			gameBoard dropState(currGameBoard);
-			if(miniOrMax == MAX)	//
+
+			if(miniOrMax == MAX)	//My turn
 			{
 				dropState.setIsMyTurn(true);
 				popState.setIsMyTurn(true);
 			}
-			else	//MIN
+			else	//Opponent's turn
 			{
 				popState.setIsMyTurn(false);
 				dropState.setIsMyTurn(false);
 			}
 
 			if (dropState.canDropADiscFromTop(i)) {
+				cerr<<"testing"<<endl;
+				currGameBoard.printBoard();
 				cerr<<"\ndropping a disc "<< i <<"\n";
 				dropState.dropADisc(i);
-				gameNode *newNode = new gameNode(dropState, &startNode, i, startNode.getDepth() + 1);
+				//create move
+				stringstream ss;
+				ss << i;
+				string move = ss.str();
+
+				move = move + " 1";
+				gameNode *newNode = new gameNode(dropState, &startNode, move, startNode.getDepth() + 1);
 				startNode.addAChild(newNode);
 				count++;
 			}
 			if(popState.canRemoveADiscFromBottom(i)) {
+				cerr<<"testing"<<endl;
+				currGameBoard.printBoard();
 				cerr<<"\npopping a disc "<< i <<"\n";
 				popState.popOutADisc(i);
-				gameNode *newNode = new gameNode(popState, &startNode, i, startNode.getDepth() + 1);
+
+				//create move
+				stringstream ss;
+				ss << i;
+				string move = ss.str();
+
+				move = move + " 0";
+				gameNode *newNode = new gameNode(popState, &startNode, move, startNode.getDepth() + 1);
 				startNode.addAChild(newNode);
 				count++;
 			}
@@ -72,36 +90,43 @@ gameNode* gameTree::buildTree(gameNode &startNode, int depth, miniOrMaxi miniOrM
 		// For all child nodes, recursively do MiniMax
 		while (it!=startNode.getChildrenNodes().end()) {
 			// Get the next child Node
-			gameNode nextChildNode((*it)->getBoardState());
+			gameNode *nextChildNode = (*it);
 			// Get the bestNode for the nextChildNode via recursion
 			if(depth%2 == 0)	//Minimize
 			{
-				cerr<<"Minimizing "<< startNode.getChildrenNodes().size()<<"\n";
-				bestNodeTemp = buildTree(nextChildNode, depth-1, MIN);
+
+				bestNodeTemp = buildTree(*nextChildNode, depth-1, MIN);
+//				if(bestNodeTemp != NULL)
+//					cerr<<"\nNOT NULL\n";
 			}
 			else	//Maximize
 			{
-				cerr<<"MAXimizing "<< startNode.getChildrenNodes().size()<<"\n";
-				if(&nextChildNode!=NULL)
-					cerr<<"child exists"<<endl;
-				bestNodeTemp = buildTree(nextChildNode, depth-1, MAX);
-			}
 
-//			// Do Min/Max
-//			if (!firstChildVisited) {
-////				startNode.setUtilityValue(nextChildNode.getUtilityValue());
-//				firstChildVisited = true;
-//			}
-//			//Maximize
-//			else if (MAX && nextChildNode.getUtilityValue() > startNode.getUtilityValue()) {
-////				startNode.setUtilityValue(nextChildNode.getUtilityValue());
-//				bestNode = bestNodeTemp;
-//			}
-//			//Minimize
-//			else if (MIN && nextChildNode.getUtilityValue() < startNode.getUtilityValue()) {
-////				startNode.setUtilityValue(nextChildNode.getUtilityValue());
-//				bestNode = bestNodeTemp;
-//			}
+				bestNodeTemp = buildTree(*nextChildNode, depth-1, MAX);
+//				if(bestNodeTemp != NULL)
+//					cerr<<"\nNOT NULL\n";
+			}
+			cerr<<"child : "<<nextChildNode->getUtilityValue()<<" start: " << startNode.getUtilityValue()<<endl;
+			cerr<<"start:"<<startNode.getUtilityValue()<<endl;
+			// Do Min/Max
+			if (!firstChildVisited) {
+
+				startNode.setUtilityValue(nextChildNode->getUtilityValue());
+
+				firstChildVisited = true;
+			}
+			//Maximize
+			else if (miniOrMax == MAX && nextChildNode->getUtilityValue() > startNode.getUtilityValue()) {
+				cerr<<"MAXimizing "<< startNode.getChildrenNodes().size()<<"\n";
+				startNode.setUtilityValue(nextChildNode->getUtilityValue());
+				bestNode = bestNodeTemp;
+			}
+			//Minimize
+			else if (miniOrMax == MIN && nextChildNode->getUtilityValue() < startNode.getUtilityValue()) {
+				cerr<<"Minimizing "<< startNode.getChildrenNodes().size()<<"\n";
+				startNode.setUtilityValue(nextChildNode->getUtilityValue());
+				bestNode = bestNodeTemp;
+			}
 //			//Alpha-Beta Pruning
 //			if (startNode.getParent() != null) {
 //				if ((MIN) && (startNode.getUtilityValue() < startNode.getParent().getUtilityValue())) {
@@ -113,4 +138,24 @@ gameNode* gameTree::buildTree(gameNode &startNode, int depth, miniOrMaxi miniOrM
 		}
 	}
 	return bestNode;
+}
+
+void gameTree::printTree()
+{
+	cerr<<"\n"<<headGameState->getUtilityValue();
+	cerr<<"\n";
+	for(vector<gameNode*>::const_iterator it = headGameState->getChildrenNodes().begin(); it!= headGameState->getChildrenNodes().end(); it++)
+	{
+		cerr<<(*it)->getUtilityValue()<< " ";
+	}
+	cerr<<"\n";
+	for(vector<gameNode*>::const_iterator it = headGameState->getChildrenNodes().begin(); it!= headGameState->getChildrenNodes().end(); it++)
+	{
+		for(vector<gameNode*>::const_iterator it2 = (*it)->getChildrenNodes().begin(); it2!=(*it)->getChildrenNodes().end(); it2++)
+		{
+			cerr<<(*it2)->getUtilityValue()<<" ";
+		}
+		cerr<<" - ";
+	}
+	cerr<<"\n";
 }
