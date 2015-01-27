@@ -87,25 +87,25 @@ gameNode* gameTree::buildTree(gameNode &startNode, int depth, miniOrMaxi miniOrM
 				bestNodeTemp = buildTree(nextChildNode, depth-1, MAX);
 			}
 
-//			// Do Min/Max
-//			if (!firstChildVisited) {
-////				startNode.setUtilityValue(nextChildNode.getUtilityValue());
-//				firstChildVisited = true;
-//			}
-//			//Maximize
-//			else if (MAX && nextChildNode.getUtilityValue() > startNode.getUtilityValue()) {
-////				startNode.setUtilityValue(nextChildNode.getUtilityValue());
-//				bestNode = bestNodeTemp;
-//			}
-//			//Minimize
-//			else if (MIN && nextChildNode.getUtilityValue() < startNode.getUtilityValue()) {
-////				startNode.setUtilityValue(nextChildNode.getUtilityValue());
-//				bestNode = bestNodeTemp;
-//			}
-//			//Alpha-Beta Pruning
-//			if (startNode.getParent() != null) {
-//				if ((MIN) && (startNode.getUtilityValue() < startNode.getParent().getUtilityValue())) {
-//					startNode.clearChildren();
+			// Do Min/Max
+			if (!firstChildVisited) {
+//				startNode.setUtilityValue(nextChildNode.getUtilityValue());
+				firstChildVisited = true;
+			}
+			//Maximize
+			else if (MAX && nextChildNode.getUtilityValue() > startNode.getUtilityValue()) {
+//				startNode.setUtilityValue(nextChildNode.getUtilityValue());
+				bestNode = bestNodeTemp;
+			}
+			//Minimize
+			else if (MIN && nextChildNode.getUtilityValue() < startNode.getUtilityValue()) {
+//				startNode.setUtilityValue(nextChildNode.getUtilityValue());
+				bestNode = bestNodeTemp;
+			}
+			//Alpha-Beta Pruning
+//			if (startNode.getParentNode() != NULL) {
+//				if ((MIN) && (startNode.getUtilityValue() < startNode.getParentNode()->getUtilityValue())) {
+//					//startNode.clearChildren();
 //					break;
 //				}
 //			}
