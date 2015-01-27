@@ -35,7 +35,12 @@ void playGame::startGame()
 					this->superGameBoard.updateBoard(getMyTurn(), playerMove);
 
 					cout << playerMove << endl;	// Send Move to Referee
+
 					cout.flush();
+
+					if (isNegative)		// Check for End of Game
+						break;
+
 			} else {
 					processOpponentsTurn(); // Read Opponent's Move
 					this->superGameBoard.updateBoard(getMyTurn(), opponentMove);
@@ -50,13 +55,18 @@ void playGame::startGame()
 
 string playGame::processOwnTurn(gameBoard gameState)
 {
+	string move;
 	IDDFS iddfs(gameState, 3);	// perform IDDFS
 	if ( globals.timeoutReached ) {	// check for timeout
 		cerr<<"timeout\n";
-		return iddfs.getMove();	//return best move so far
+		move = iddfs.getMove();
+		cerr<<"\nsuccess move: " << move <<"\n";
+		return move;	//return best move so far
 
 	}
-	return iddfs.getMove();	//return best move so far
+	move = iddfs.getMove();
+	cerr<<"\nsuccess move: " << move <<"\n";
+	return move;	//return best move so far
 }
 
 // Process Opponent's turn

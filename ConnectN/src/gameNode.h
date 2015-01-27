@@ -15,17 +15,18 @@ private:
 	gameNode *parentNode;
 	float utilityValue;
 	gameBoard boardState;
-	vector<gameNode*> childrenNodes;
+
 	string move;
     int depth;
 
 public:
+    vector<gameNode*> childrenNodes;
     gameNode(gameBoard state, gameNode *parent, string move, int depth);
 
     //Root node constructor
     gameNode(gameBoard state);
 
-    void addAChild(gameNode *newNode);
+    void addAChild(gameNode &newNode);
 
     void removeEmptyChildren(int count);
 
