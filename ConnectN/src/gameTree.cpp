@@ -59,7 +59,7 @@ gameNode* gameTree::buildTree(gameNode &startNode, int depth, miniOrMaxi miniOrM
 
 				move = move + " 1";
 				gameNode *newNode = new gameNode(dropState, &startNode, move, startNode.getDepth() + 1);
-				startNode.addAChild(newNode);
+				startNode.addAChild(*newNode);
 				count++;
 			}
 			if(popState.canRemoveADiscFromBottom(i)) {
@@ -76,7 +76,7 @@ gameNode* gameTree::buildTree(gameNode &startNode, int depth, miniOrMaxi miniOrM
 
 				move = move + " 0";
 				gameNode *newNode = new gameNode(popState, &startNode, move, startNode.getDepth() + 1);
-				startNode.addAChild(newNode);
+				startNode.addAChild(*newNode);
 				count++;
 			}
 		}
