@@ -131,6 +131,10 @@ bool gameBoard::canRemoveADiscFromBottom(int col){
 		//		cerr<<"You don't have a checker in column " << col << " to pop out!"<<endl;
 		return false;
 	}
+	else if(!globals.isPopOutLeft)
+	{
+		return false;
+	}
 	else
 		return true;
 }
