@@ -110,6 +110,8 @@ void gameBoard::printBoard()
 		 }
 		 cerr<<"\n";
 	}
+
+
 }
 
 bool gameBoard::canRemoveADiscFromBottom(int col){
@@ -393,23 +395,27 @@ double gameBoard::heuristicEvaluator(){
 		return 15000; //If player has line combo of n or more, that is a win. Best choice!
 	}
 
-	int oval=0.001;
-	for(int i=2; i>n; i++){
+	double oval=0.001;
+	for(int i=2; i<n; i++){
 		oval += Lo[i] *i*i;
 	}
 
-	int pval=0.001;
-	for(int i=2; i>n; i++){
+	double pval=0.001;
+	for(int i=2; i<n; i++){
 		pval += Lp[i] *i*i;
 	}
 
 	hVal = pval / oval;
 
 	//Real return
+
 	return hVal;
 
 	//TESTING - returns between 0 and 1 just for testing purposes
 //	return rand()%100;
+
+
+//	cerr << "pval / oval :"<<pval << "/" <<oval<<"\n";
 }
 
 map<int,int> gameBoard::comboCounter(int activePl){
