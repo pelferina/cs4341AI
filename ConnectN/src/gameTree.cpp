@@ -130,13 +130,13 @@ gameNode* gameTree::buildTree(gameNode &startNode, int depth, miniOrMaxi miniOrM
 				startNode.setUtilityValue(nextChildNode->getUtilityValue());
 				bestNode = bestNodeTemp;
 			}
-//			//Alpha-Beta Pruning
-//			if (startNode.getParent() != null) {
-//				if ((MIN) && (startNode.getUtilityValue() < startNode.getParent().getUtilityValue())) {
-//					startNode.clearChildren();
-//					break;
-//				}
-//			}
+			//Alpha-Beta Pruning
+			if (startNode.getParentNode() != NULL) {
+				if (miniOrMax == MIN && (startNode.getUtilityValue() < startNode.getParentNode()->getUtilityValue())) {
+					startNode.clearChildren();
+					break;
+				}
+			}
 			it++;
 		}
 	}

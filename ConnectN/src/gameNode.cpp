@@ -31,3 +31,8 @@ void gameNode::removeEmptyChildren(int count)
 {
 	childrenNodes.erase(childrenNodes.begin(), childrenNodes.begin()+(childrenNodes.size()-count));
 }
+
+void gameNode::clearChildren()
+{
+	childrenNodes.clear();
+}

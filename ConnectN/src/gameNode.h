@@ -30,6 +30,8 @@ public:
 
     void removeEmptyChildren(int count);
 
+    void clearChildren();
+
 	const gameBoard& getBoardState() const {
 		return boardState;
 	}
