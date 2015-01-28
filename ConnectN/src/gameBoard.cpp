@@ -108,6 +108,8 @@ void gameBoard::printBoard()
 		 }
 		 cerr<<"\n";
 	}
+
+
 }
 
 bool gameBoard::canRemoveADiscFromBottom(int col){
@@ -385,31 +387,35 @@ double gameBoard::heuristicEvaluator(){
 	map<int,int> Lo = comboCounter(OPPONENT); //Number of line combos of each length 2 to n
 	map<int,int> Lp = comboCounter(PLAYER); //Number of line combos of each length
 
-//	if(Lo[n] >= 1 && Lp[n] >= 1){
-//		return 10000; //If both opponent and player have multiple winds, it would be a tie. This AI decides ties are better than normal moves, but worse than wins
-//	}else if(Lo[n] >= 1){
-//		return -1; //If opponent has a line combo of n or more, that is a loss. Worst choice
-//	}else if(Lp[n] >= 1){
-//		return 15000; //If player has line combo of n or more, that is a win. Best choice!
-//	}
+	if(Lo[n] >= 1 && Lp[n] >= 1){
+		return 10000; //If both opponent and player have multiple winds, it would be a tie. This AI decides ties are better than normal moves, but worse than wins
+	}else if(Lo[n] >= 1){
+		return -1; //If opponent has a line combo of n or more, that is a loss. Worst choice
+	}else if(Lp[n] >= 1){
+		return 15000; //If player has line combo of n or more, that is a win. Best choice!
+	}
 
-	int oval=0.001;
-	for(int i=2; i>n; i++){
+	double oval=0.001;
+	for(int i=2; i<n; i++){
 		oval += Lo[i] *i*i;
 	}
 
-	int pval=0.001;
-	for(int i=2; i>n; i++){
+	double pval=0.001;
+	for(int i=2; i<n; i++){
 		pval += Lp[i] *i*i;
 	}
 
 	hVal = pval / oval;
 
 	//Real return
-//	return hVal;
+
+	cerr << "pval / oval :"<<pval << "/" <<oval<<"\n";
+
+
+	return hVal;
 
 	//TESTING - returns between 0 and 1 just for testing purposes
-	return rand()%100;
+	//return rand()%100;
 }
 
 map<int,int> gameBoard::comboCounter(int activePl){
