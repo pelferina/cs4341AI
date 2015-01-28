@@ -21,7 +21,7 @@ gameNode* gameTree::buildTree(gameNode &startNode, int depth, miniOrMaxi miniOrM
 		gameBoard currGameBoard(startNode.getBoardState());
 		//Use the heuristic function to calculate its utility
 		startNode.setUtilityValue(currGameBoard.heuristicEvaluator());
-		cerr<<"\nutility value: "<<startNode.getUtilityValue()<<endl;
+//		cerr<<"\nutility value: "<<startNode.getUtilityValue()<<endl;
 		bestNode = &startNode;
 	}
 
@@ -50,14 +50,14 @@ gameNode* gameTree::buildTree(gameNode &startNode, int depth, miniOrMaxi miniOrM
 //				DEBUG
 //				cerr<<"testing"<<endl;
 //				currGameBoard.printBoard();
-				cerr<<"\ndropping a disc "<< i <<"\n";
+//				cerr<<"\ndropping a disc "<< i <<"\n";
 				dropState.dropADisc(i);
 				//create move
 				stringstream ss;
 				ss << i;
 				string move = ss.str();
 
-				move = move + " 1";
+				move = move + " 1\n";
 				gameNode *newNode = new gameNode(dropState, &startNode, move, startNode.getDepth() + 1);
 				startNode.addAChild(*newNode);
 				count++;
@@ -66,7 +66,7 @@ gameNode* gameTree::buildTree(gameNode &startNode, int depth, miniOrMaxi miniOrM
 //				DEBUG
 //				cerr<<"testing"<<endl;
 //				currGameBoard.printBoard();
-				cerr<<"\npopping a disc "<< i <<"\n";
+//				cerr<<"\npopping a disc "<< i <<"\n";
 				popState.popOutADisc(i);
 
 				//create move
@@ -74,7 +74,7 @@ gameNode* gameTree::buildTree(gameNode &startNode, int depth, miniOrMaxi miniOrM
 				ss << i;
 				string move = ss.str();
 
-				move = move + " 0";
+				move = move + " 0\n";
 				gameNode *newNode = new gameNode(popState, &startNode, move, startNode.getDepth() + 1);
 				startNode.addAChild(*newNode);
 				count++;
@@ -140,48 +140,48 @@ gameNode* gameTree::buildTree(gameNode &startNode, int depth, miniOrMaxi miniOrM
 			it++;
 		}
 	}
-	cerr<<"\nreturning bestnode\n";
+//	cerr<<"\nreturning bestnode\n";
 	return bestNode;
 }
 
 void gameTree::printTree(int n)
 {
-	cerr<<"\n"<<headGameState->getUtilityValue();
-	cerr<<"\n";
-	if(n>=1)
-	{
-		for(vector<gameNode*>::const_iterator it = headGameState->getChildrenNodes().begin(); it!= headGameState->getChildrenNodes().end(); it++)
-		{
-			cerr<<(*it)->getUtilityValue()<< " ";
-		}
-		cerr<<"\n";
-	}
-	if(n>=2)
-	{
-		for(vector<gameNode*>::const_iterator it = headGameState->getChildrenNodes().begin(); it!= headGameState->getChildrenNodes().end(); it++)
-		{
-			for(vector<gameNode*>::const_iterator it2 = (*it)->getChildrenNodes().begin(); it2!=(*it)->getChildrenNodes().end(); it2++)
-			{
-				cerr<<(*it2)->getUtilityValue()<<" ";
-			}
-			cerr<<" - ";
-		}
-		cerr<<"\n";
-	}
-	if(n>=3)
-	{
-		for(vector<gameNode*>::const_iterator it = headGameState->getChildrenNodes().begin(); it!= headGameState->getChildrenNodes().end(); it++)
-		{
-			for(vector<gameNode*>::const_iterator it2 = (*it)->getChildrenNodes().begin(); it2!=(*it)->getChildrenNodes().end(); it2++)
-			{
-				for(vector<gameNode*>::const_iterator it3 = (*it2)->getChildrenNodes().begin(); it3!=(*it2)->getChildrenNodes().end(); it3++)
-				{
-					cerr<<(*it3)->getUtilityValue()<<" ";
-				}
-				cerr<<" - ";
-			}
-			cerr<<" - ";
-		}
-		cerr<<"\nend";
-	}
+//	cerr<<"\n"<<headGameState->getUtilityValue();
+//	cerr<<"\n";
+//	if(n>=1)
+//	{
+//		for(vector<gameNode*>::const_iterator it = headGameState->getChildrenNodes().begin(); it!= headGameState->getChildrenNodes().end(); it++)
+//		{
+//			cerr<<(*it)->getUtilityValue()<< " ";
+//		}
+//		cerr<<"\n";
+//	}
+//	if(n>=2)
+//	{
+//		for(vector<gameNode*>::const_iterator it = headGameState->getChildrenNodes().begin(); it!= headGameState->getChildrenNodes().end(); it++)
+//		{
+//			for(vector<gameNode*>::const_iterator it2 = (*it)->getChildrenNodes().begin(); it2!=(*it)->getChildrenNodes().end(); it2++)
+//			{
+//				cerr<<(*it2)->getUtilityValue()<<" ";
+//			}
+//			cerr<<" - ";
+//		}
+//		cerr<<"\n";
+//	}
+//	if(n>=3)
+//	{
+//		for(vector<gameNode*>::const_iterator it = headGameState->getChildrenNodes().begin(); it!= headGameState->getChildrenNodes().end(); it++)
+//		{
+//			for(vector<gameNode*>::const_iterator it2 = (*it)->getChildrenNodes().begin(); it2!=(*it)->getChildrenNodes().end(); it2++)
+//			{
+//				for(vector<gameNode*>::const_iterator it3 = (*it2)->getChildrenNodes().begin(); it3!=(*it2)->getChildrenNodes().end(); it3++)
+//				{
+//					cerr<<(*it3)->getUtilityValue()<<" ";
+//				}
+//				cerr<<" - ";
+//			}
+//			cerr<<" - ";
+//		}
+//		cerr<<"\nend";
+//	}
 }

@@ -26,7 +26,6 @@ gameBoard::gameBoard(const gameBoard &anotherBoard)
 	this->numDiscsInColumn = anotherBoard.getNumDiscsInColumn();
 	this->opponentPieces = anotherBoard.opponentPieces;
 	this->playerPieces = anotherBoard.playerPieces;
-
 }
 // updates board every turn
 void gameBoard::updateBoard(bool turn, string move)
@@ -50,10 +49,13 @@ void gameBoard::updateBoard(bool turn, string move)
 			type = atoi(token.c_str());
 	}
 
-	if(type == DROP)
+	if(type == DROP)	//Drops the disc in the col
 		dropADisc(col);
 	else
-		popOutADisc(col);
+	{
+		popOutADisc(col);	//Pops the disc from the col
+		globals.isPopOutLeft = false;	// Makes sure that pop out is only used once (Used as a check in heuristic evaluator)
+	}
 }
 
 //Drops a disc
@@ -63,7 +65,7 @@ void gameBoard::dropADisc(int col)
 	firstEmptyCellRow = height - numDiscsInColumn[col] - 1;
 	if(isMyTurn)
 	{
-		cerr<<"my turn"<<endl;
+//		cerr<<"my turn"<<endl;
 		board[firstEmptyCellRow][col] = globals.ownCell;
 
 		//Add game piece to player's list
@@ -72,7 +74,7 @@ void gameBoard::dropADisc(int col)
 	}
 	else
 	{
-		cerr<<"opp turn"<<endl;
+//		cerr<<"opp turn"<<endl;
 		board[firstEmptyCellRow][col] = globals.opponentCell;
 
 		//Add game piece to opponent's list
@@ -111,42 +113,40 @@ void gameBoard::printBoard()
 }
 
 bool gameBoard::canRemoveADiscFromBottom(int col){
-{
 
-		cerr<<"checking popping: "<< board[height-1][col]<< " " << globals.ownCell<< " " <<endl;
+//		cerr<<"checking popping: "<< board[height-1][col]<< " " << globals.ownCell<< " " <<endl;
 	if(col<0 || col>=this->width) {
-		cerr<<"Illegal column!"<<endl;
+//		cerr<<"Illegal column!"<<endl;
 		return false;
 	}
 	else if(getIsMyTurn() && board[height-1][col]!=globals.ownCell){
-		cerr<<"You don't have a checker in column " << col << " to pop out!"<<endl;
+//		cerr<<"You don't have a checker in column " << col << " to pop out!"<<endl;
 		return false;
 	}
 	else if(!getIsMyTurn() && board[height-1][col]!=globals.opponentCell)
 	{
-		cerr<<"You don't have a checker in column " << col << " to pop out!"<<endl;
+//		cerr<<"You don't have a checker in column " << col << " to pop out!"<<endl;
 		return false;
 	}
 	else
 		return true;
-	}
 }
 
 bool gameBoard::canDropADiscFromTop(int col)
 {
-	cerr<<"\ncan drop a disc\n";
+//	cerr<<"\ncan drop a disc\n";
 	if(col<0 || col>=this->width) {
-		cerr<< "Illegal column!"<<endl;
+//		cerr<< "Illegal column!"<<endl;
 		return false;
 	}
 	else if(this->numDiscsInColumn[col]==this->height){
-		cerr<<"Column is already full. Cannot drop more disc in it."<<endl;
+//		cerr<<"Column is already full. Cannot drop more disc in it."<<endl;
 		return false;
 	}
 	else
 	{
-		cerr<<numDiscsInColumn.size()<<numDiscsInColumn[col];
-		cerr<<"dropping a disc cause its true";
+//		cerr<<numDiscsInColumn.size()<<numDiscsInColumn[col];
+//		cerr<<"dropping a disc cause its true";
 		return true;
 	}
 
@@ -385,13 +385,13 @@ double gameBoard::heuristicEvaluator(){
 	map<int,int> Lo = comboCounter(OPPONENT); //Number of line combos of each length 2 to n
 	map<int,int> Lp = comboCounter(PLAYER); //Number of line combos of each length
 
-//	if(Lo[n] >= 1 && Lp[n] >= 1){
-//		return 10000; //If both opponent and player have multiple winds, it would be a tie. This AI decides ties are better than normal moves, but worse than wins
-//	}else if(Lo[n] >= 1){
-//		return -1; //If opponent has a line combo of n or more, that is a loss. Worst choice
-//	}else if(Lp[n] >= 1){
-//		return 15000; //If player has line combo of n or more, that is a win. Best choice!
-//	}
+	if(Lo[n] >= 1 && Lp[n] >= 1){
+		return 10000; //If both opponent and player have multiple winds, it would be a tie. This AI decides ties are better than normal moves, but worse than wins
+	}else if(Lo[n] >= 1){
+		return -1; //If opponent has a line combo of n or more, that is a loss. Worst choice
+	}else if(Lp[n] >= 1){
+		return 15000; //If player has line combo of n or more, that is a win. Best choice!
+	}
 
 	int oval=0.001;
 	for(int i=2; i>n; i++){
@@ -406,10 +406,10 @@ double gameBoard::heuristicEvaluator(){
 	hVal = pval / oval;
 
 	//Real return
-//	return hVal;
+	return hVal;
 
 	//TESTING - returns between 0 and 1 just for testing purposes
-	return rand()%100;
+//	return rand()%100;
 }
 
 map<int,int> gameBoard::comboCounter(int activePl){

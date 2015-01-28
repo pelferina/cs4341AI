@@ -33,7 +33,7 @@ public:
 		this->maxDepth = maxDepth;
 	}
 
-	const string& getMove() const {
+	const string getMove() const {
 		return move;
 	}
 

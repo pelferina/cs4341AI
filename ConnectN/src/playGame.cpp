@@ -8,7 +8,7 @@
 #include "main.h"
 
 // Initialize Game
-playGame::playGame(int playerNum, int h, int w, int N, int turn, int time): isNegative(false), superGameBoard(w, h, N)
+playGame::playGame(int playerNum, int h, int w, int N, int turn, int time): isNegative(false), playerMove(""), superGameBoard(w, h, N)
 {
 	playerNumber = playerNum;
 	height = h;
@@ -23,29 +23,30 @@ playGame::playGame(int playerNum, int h, int w, int N, int turn, int time): isNe
 void playGame::startGame()
 {
 	cin.ignore(100,'\n'); //Ignores the newline character from cin in readGameConfig
-
+	ofstream myfile;
 	while (true) {
 			if ( getMyTurn() ) {
 					globals.timeoutReached = false;
 					signal(SIGALRM, timeout_handler);	// Set Signal Handler
 					alarm(timeLimit);			// Start the Timer
 
+
 					playerMove = processOwnTurn(this->superGameBoard);
+//					myfile.open ("debug3.txt",ios::out | ios::app);
+//					myfile << "\n I MOVED SERIOUSLY:"<<playerMove.c_str()<<"see"<<endl;
+//					myfile.close();
 
 					this->superGameBoard.updateBoard(getMyTurn(), playerMove);
-
-					cout << playerMove << endl;	// Send Move to Referee
-
-					cout.flush();
 
 					if (isNegative)		// Check for End of Game
 						break;
 
 			} else {
 					processOpponentsTurn(); // Read Opponent's Move
-					this->superGameBoard.updateBoard(getMyTurn(), opponentMove);
 					if (isNegative)		// Check for End of Game
 						break;
+					this->superGameBoard.updateBoard(getMyTurn(), opponentMove);
+
 			}
 			this->superGameBoard.printBoard();
 			setMyTurn(!getMyTurn());	// Switch turns between moves
@@ -55,17 +56,20 @@ void playGame::startGame()
 
 string playGame::processOwnTurn(gameBoard gameState)
 {
+	ofstream myfile;
 	string move;
-	IDDFS iddfs(gameState, 3);	// perform IDDFS
-	if ( globals.timeoutReached ) {	// check for timeout
-		cerr<<"timeout\n";
-		move = iddfs.getMove();
-		cerr<<"\nsuccess move: " << move <<"\n";
-		return move;	//return best move so far
 
-	}
+	IDDFS iddfs(gameState, 3);	// perform IDDFS
 	move = iddfs.getMove();
-	cerr<<"\nsuccess move: " << move <<"\n";
+
+	cout<<move;	//Send to referee
+
+//	DEBUG
+	myfile.open ("debug3.txt",ios::out | ios::app);
+	myfile << "\nWriting this to a file.\n";
+	myfile<<move<< " " << "opp's move"<<endl;
+	myfile.close();
+
 	return move;	//return best move so far
 }
 
@@ -78,7 +82,12 @@ void playGame::processOpponentsTurn()
 
 	std::stringstream stream(opponentsState);	// Counts the words received
 	int wordCount = std::distance(std::istream_iterator<std::string>(stream), std::istream_iterator<std::string>());
-
+	ofstream myfile;
+	//DEBUG
+	myfile.open ("debug2.txt",ios::out | ios::app);
+	myfile << "\nWriting this to a file.\n";
+	myfile<<opponentsState << " " << wordCount<<endl;
+	myfile.close();
 	switch(wordCount)
 	{
 		case 1:	// -1 indicating that the player won the game;

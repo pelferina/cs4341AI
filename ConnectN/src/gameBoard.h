@@ -19,6 +19,7 @@
 #include <string.h>
 #include <list>
 #include <map>
+#include <fstream>
 
 using namespace std;
 
@@ -92,7 +93,6 @@ public:
 	map<int,int> checkDiagonalSE(int activePl);
 	//Calculates heuristics based on weighted values for each number of combos
 	double heuristicEvaluator();
-
 
 };
 

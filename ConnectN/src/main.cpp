@@ -6,6 +6,7 @@
  */
 
 #include "main.h"
+
 Globals globals;
 
 int main(int argc, char **argv)
@@ -13,6 +14,9 @@ int main(int argc, char **argv)
 		initGlobals();
 
 		superRandomPlayer myPlayer("srl");	// Creates our super random player with given name
+
+		ofstream myfile;
+		myfile.open ("debug.txt");
 
 		int height, width, numToWin, playerTurn, timeLimit;
 
@@ -22,10 +26,16 @@ int main(int argc, char **argv)
 		// and the time limit to make a move in seconds.
 
 		cin >> height >> width >> numToWin >> playerTurn >> timeLimit;
+//		DEBUG FILE
+		myfile << "Writing this to a file.\n";
+		myfile<<height << " " << width<< " " << numToWin << " " << playerTurn << " " << timeLimit<<endl;
+		myfile.close();
 
 		playGame newGame(myPlayer.getPlayerNumber(), height, width, numToWin, playerTurn, timeLimit);	// Initializes game variables
 
 		newGame.startGame();	// Begins game play
+
+
 
         return 0;
 }

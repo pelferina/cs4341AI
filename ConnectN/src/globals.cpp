@@ -18,6 +18,8 @@ void initGlobals()
 	globals.OPPONENTWINS=2;
 	globals.NOCONNECTION=-1;
 	globals.TIE=0;
+
+	globals.isPopOutLeft = true;
 }
 
 void timeout_handler(int sig)

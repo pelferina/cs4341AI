@@ -20,6 +20,7 @@ typedef struct Globals
 	int NOCONNECTION;
 	int TIE;
 
+	bool isPopOutLeft;
 	bool timeoutReached;
 }Globals;
 

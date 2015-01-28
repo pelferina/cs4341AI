@@ -9,14 +9,14 @@
 
 gameNode::gameNode(gameBoard state, gameNode *parent, string mov, int depth): utilityValue(0), boardState(state), move(mov), depth(0)
 {
-	cerr<<"\n creating a new node\n";
+//	cerr<<"\n creating a new node\n";
 	this->parentNode = parent;
 }
 
 //Root node constructor
 gameNode::gameNode(gameBoard state):utilityValue(0), boardState(state), move(" "), depth(0)
 {
-	cerr<<"\n creating a root node\n";
+//	cerr<<"\n creating a root node\n";
 	this->parentNode = NULL;
 }
 
@@ -24,7 +24,7 @@ void gameNode::addAChild (gameNode &node)
 {
 	childrenNodes.push_back(&node);
 	gameBoard currGameState = node.getBoardState();
-	currGameState.printBoard();
+//	currGameState.printBoard();
 }
 
 void gameNode::removeEmptyChildren(int count)
