@@ -2,7 +2,7 @@
  * gameBoard.cpp
  *
  *  Created on: Jan 25, 2015
- *      Author: Ayesha
+ *      Author: Ayesha & Eric
  */
 
 #include "main.h"

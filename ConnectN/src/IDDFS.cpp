@@ -2,7 +2,7 @@
  * IDDFS.cpp
  *
  *  Created on: Jan 27, 2015
- *      Author: Ayesha
+ *      Author: Ayesha & Eric
  */
 
 #include "main.h"
