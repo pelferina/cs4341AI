@@ -135,8 +135,6 @@ void gameBoard::printBoard()
 		cerr<<"\n";
 	}
 
-	heuristicEvaluator();
-
 }
 
 bool gameBoard::canRemoveADiscFromBottom(int col){
@@ -407,7 +405,6 @@ bool gameBoard::isFull(){
 
 //Calculates heuristics based on weighted values for each number of combos
 double gameBoard::heuristicEvaluator(){
-	cerr << "----HE---\n";
 	//TESTING
 	int n = getNumToWin(); //Number of pieces needed to win
 
@@ -436,17 +433,17 @@ double gameBoard::heuristicEvaluator(){
 //	cerr << "\n";
 
 	if(Lo[n] >= 1 && Lp[n] >= 1){
-		cerr << "Tie\n";
+		//cerr << "Tie\n";
 		return 100; //If both opponent and player have multiple wins, it would be a tie. This AI decides ties are better than normal moves, but worse than wins
 	}else if(Lo[n] >= 1){
-		cerr<< "Lo wins\n";
+		//cerr<< "Lo wins\n";
 		if(isMyTurn){
 			return -1;
 		}else{
 			return 100;
 		} //If opponent has a line combo of n or more, that is a loss. Worst choice
 	}else if(Lp[n] >= 1){
-		cerr << "Lp Wins\n---------\n";
+		//cerr << "Lp Wins\n";
 		if(isMyTurn){
 			return 150;
 		}else{
@@ -463,7 +460,6 @@ double gameBoard::heuristicEvaluator(){
 			oval += it->second * it->first * it->first;
 		}
 	}
-	cerr << "oval="<<oval<<"\n";
 
 	double pval=0.1;
 
@@ -474,9 +470,15 @@ double gameBoard::heuristicEvaluator(){
 			pval += it->second * it->first * it->first;
 		}
 	}
-	cerr << "pval="<<pval<<"\n";
 
-	hVal = pval / oval;
+	if(isMyTurn){
+		hVal = pval / oval;
+	}else{
+		hVal = oval/pval;
+	}
+	//hVal = pval / oval;
+
+	cerr << "pval/oval="<<pval<<"/"<<oval<<"="<<hVal<<"\n";
 
 	//Real return
 	return hVal;
