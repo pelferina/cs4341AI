@@ -58,8 +58,8 @@ string playGame::processOwnTurn(gameBoard gameState)
 {
 	ofstream myfile;
 	string move;
-
-	IDDFS iddfs(gameState, 3);	// perform IDDFS
+	int maxDepth =5;
+	IDDFS iddfs(gameState, maxDepth);	// perform IDDFS to maxDepth
 	move = iddfs.getMove();
 
 	cout<<move;	//Send to referee

@@ -1,14 +1,6 @@
 
 Writing this to a file.
-6 1
- opp's move
-
-Writing this to a file.
-0 1
- opp's move
-
-Writing this to a file.
-0 1
+4 1
  opp's move
 
 Writing this to a file.
@@ -16,33 +8,13 @@ Writing this to a file.
  opp's move
 
 Writing this to a file.
-1 1
- opp's move
-
-Writing this to a file.
-3 1
- opp's move
-
-Writing this to a file.
-3 1
- opp's move
-
-Writing this to a file.
 6 1
  opp's move
 
 Writing this to a file.
-0 1
+6 0
  opp's move
 
 Writing this to a file.
-0 1
- opp's move
-
-Writing this to a file.
-0 1
- opp's move
-
-Writing this to a file.
-3 1
+4 1
  opp's move
