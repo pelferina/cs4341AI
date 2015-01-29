@@ -94,6 +94,30 @@ void gameBoard::popOutADisc(int col)
 	}
 	board[i][col] = globals.emptyCell;
 	this->numDiscsInColumn[col]--;
+
+	//change the storage of pieces
+	for(int i=0; i< playerPieces.size(); i++) {
+		if(playerPieces[i].col == col){
+			playerPieces[i].row = playerPieces[i].row + 1;
+			if(playerPieces[i].row > height-1){
+
+
+				playerPieces.erase(playerPieces.begin() +i);
+			}
+		}
+	}
+
+	for(int i=0; i< opponentPieces.size(); i++) {
+		if(opponentPieces[i].col == col){
+			opponentPieces[i].row = opponentPieces[i].row + 1;
+			if(opponentPieces[i].row > height-1){
+
+
+				opponentPieces.erase(opponentPieces.begin() +i);
+			}
+		}
+	}
+
 }
 
 //Prints board
@@ -393,21 +417,7 @@ double gameBoard::heuristicEvaluator(){
 	map<int,int> Lo = comboCounter(OPPONENT); //Number of line combos of each length 2 to n
 	map<int,int> Lp = comboCounter(PLAYER); //Number of line combos of each length
 
-	cerr << "LpSize = "<<Lp.size()<< "\tLp[n] ="<<Lp[n]<<"\n";
-	for(map<int, int>::const_iterator it = Lp.begin();
-			it != Lp.end(); ++it)
-	{
-		cerr << "  PPiece["<<it->first<<","<<it->second<<"\n";
-	}
-
-	cerr << "LoSize = "<<Lo.size()<< "\tLo[n] ="<<Lo[n]<<"\n";
-	for(map<int, int>::const_iterator it = Lo.begin();
-			it != Lo.end(); ++it)
-	{
-		cerr << "  PPiece["<<it->first<<","<<it->second<<"\n";
-	}
-
-cerr <<"Lo  ||";
+	cerr <<"Lo  ||";
 	for(map<int, int>::const_iterator it = Lo.begin();
 			it != Lo.end(); ++it)
 	{
@@ -415,7 +425,7 @@ cerr <<"Lo  ||";
 			cerr << "+(" <<it->first<<"^2 * "<<it->second << ")";
 		}
 	}
-cerr << "\nLp  ||";
+	cerr << "\nLp  ||";
 	for(map<int, int>::const_iterator it = Lp.begin();
 			it != Lp.end(); ++it)
 	{
@@ -423,7 +433,7 @@ cerr << "\nLp  ||";
 			cerr << "+(" <<it->first<<"^2 * "<<it->second << ")";
 		}
 	}
-cerr << "\n";
+	cerr << "\n";
 
 	if(Lo[n] >= 1 && Lp[n] >= 1){
 		return 100; //If both opponent and player have multiple wins, it would be a tie. This AI decides ties are better than normal moves, but worse than wins
