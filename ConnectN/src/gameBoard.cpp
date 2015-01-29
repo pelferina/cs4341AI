@@ -478,7 +478,7 @@ double gameBoard::heuristicEvaluator(){
 	}
 	//hVal = pval / oval;
 
-	cerr << "pval/oval="<<pval<<"/"<<oval<<"="<<hVal<<"\n";
+	//cerr << "pval/oval="<<pval<<"/"<<oval<<"="<<hVal<<"\n";
 
 	//Real return
 	return hVal;
@@ -680,6 +680,7 @@ map<int,int> gameBoard::checkVertical(int activePl){
 		//Check for blocking opponent pieces
 		for(int j=1; j<=bdistance; j++){
 			//cerr << "  chk blk ["<<r+j<<","<<c<<"]\n";
+			if(r+j > height-1) break;
 			if(board[r+j][c]== ocell){
 				bottomRange = p1[piece].row+j-1;
 				break;
@@ -697,7 +698,7 @@ map<int,int> gameBoard::checkVertical(int activePl){
 
 		//Check for blocking opponent pieces
 		for(int j=1; j<=tdistance; j++){
-			//cerr << "  chk blk ["<<r-j<<","<<c<<"]\n";
+			if(r-j < 0) break;
 			if(board[r-j][c]== ocell){
 				topRange = p1[piece].row-j+1;
 				break;
@@ -712,7 +713,7 @@ map<int,int> gameBoard::checkVertical(int activePl){
 		}else{ //Possible combo, look for actual combo existing
 			//cerr <<"Origin piece:" << r <<","<<c<<"\tRanges"<<bottomRange<<","<<topRange<<"\n";
 			if(used[piece] == true) break;
-			used[piece]=true;
+				used[piece]=true;
 			//p1.erase(p1.begin() +piece);//Removes self so it doesnt use this to search
 
 			//comboLeft and comboRight used to determine combo length like ranges
@@ -720,13 +721,14 @@ map<int,int> gameBoard::checkVertical(int activePl){
 			//checking left
 			//------CHECKING BELOW COMBO------//
 			for(int k=r+1;k<=bottomRange+1; k++){
-				if(k > height-1) break;
+				if(k > height-1 || k<0) break;
 				//cerr << "   checking below k="<<k<<"\t"<<board[k][c]<<"\n";
 				if(board[k][c] == cell){
 					//cerr << "  found friendly below at " << k <<"\n";
 					comboBottomRange = k;
 
 					for(unsigned j=0; j<p1.size(); j++){
+						if(j > p1.size()-1) break;
 						if(p1[j].row == k && p1[j].col == c){
 							used[j]=true;
 							//p1.erase(p1.begin() +j); //Remove so its not double counted
@@ -742,6 +744,7 @@ map<int,int> gameBoard::checkVertical(int activePl){
 
 			for(int k=r-1;k>=topRange-1; k--){
 				//cerr << "   checking above k="<<k<<"\t"<<board[k][c]<<"\n";
+				if(k > height-1 || k<0) break;
 				if(board[k][c] == cell){
 					//cerr << "  found friendly above at " << k <<"\n";
 					comboTopRange = k;
