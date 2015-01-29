@@ -1,0 +1,15 @@
+							EXPERIMENT REPORT
+
+Our original plan for heuristics was to simply count the number of combos (lines of 2, 3, 4, etc) of each length, and to compare 
+the opponents number and the player’s number. The AI would make moves that increased their own combos, and decreased the number of 
+the opponent’s combos.
+
+In testing we realized that we needed to weight the larger combos, or else the AI would think that four lines of 2 is the same value
+ as a single line of 8, which is much more difficult to accomplish. To fix this failure, we redesigned our heuristics, by weighting 
+each combo length as it’s length squared. This made the AI want to destroy its opponents long combos as much as possible, resulting 
+in a much better AI.
+
+We also decided that we would use more time and processing power to really make our combo counter think well. Instead of simply counting
+ combos that exist on the board, we made our heuristic only count combos that can actually be completed to win the game. That way,
+ the AI would not try to make a combo better when it is a dead end and nothing good will come of it. We decided that this was a good 
+trade off of having to calculate more spaces.

@@ -13,7 +13,7 @@ gameBoard::gameBoard(int w, int h, int N): board(h, vector < char >(w, (globals.
 	width = w;
 	height = h;
 	numToWin = N;
-	printBoard();
+//	printBoard();
 }
 // Copy constructor
 gameBoard::gameBoard(const gameBoard &anotherBoard)

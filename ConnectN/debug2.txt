@@ -16,3 +16,18 @@ Writing this to a file.
 
 Writing this to a file.
 4 1 2
+
+Writing this to a file.
+0 1 2
+
+Writing this to a file.
+6 1 2
+
+Writing this to a file.
+ 0
+
+Writing this to a file.
+0 1 2
+
+Writing this to a file.
+ 0

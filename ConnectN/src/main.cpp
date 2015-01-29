@@ -27,9 +27,9 @@ int main(int argc, char **argv)
 
 		cin >> height >> width >> numToWin >> playerTurn >> timeLimit;
 //		DEBUG FILE
-		myfile << "Writing this to a file.\n";
-		myfile<<height << " " << width<< " " << numToWin << " " << playerTurn << " " << timeLimit<<endl;
-		myfile.close();
+//		myfile << "Writing this to a file.\n";
+//		myfile<<height << " " << width<< " " << numToWin << " " << playerTurn << " " << timeLimit<<endl;
+//		myfile.close();
 
 		playGame newGame(myPlayer.getPlayerNumber(), height, width, numToWin, playerTurn, timeLimit);	// Initializes game variables
 

@@ -48,7 +48,8 @@ void playGame::startGame()
 					this->superGameBoard.updateBoard(getMyTurn(), opponentMove);
 
 			}
-			this->superGameBoard.printBoard();
+//			DEBUG
+//			this->superGameBoard.printBoard();
 			setMyTurn(!getMyTurn());	// Switch turns between moves
 
 	}
@@ -65,10 +66,10 @@ string playGame::processOwnTurn(gameBoard gameState)
 	cout<<move;	//Send to referee
 
 //	DEBUG
-	myfile.open ("debug3.txt",ios::out | ios::app);
-	myfile << "\nWriting this to a file.\n";
-	myfile<<move<< " " << "opp's move"<<endl;
-	myfile.close();
+//	myfile.open ("debug3.txt",ios::out | ios::app);
+//	myfile << "\nWriting this to a file.\n";
+//	myfile<<move<< " " << "opp's move"<<endl;
+//	myfile.close();
 
 	return move;	//return best move so far
 }
@@ -84,10 +85,10 @@ void playGame::processOpponentsTurn()
 	int wordCount = std::distance(std::istream_iterator<std::string>(stream), std::istream_iterator<std::string>());
 	ofstream myfile;
 	//DEBUG
-	myfile.open ("debug2.txt",ios::out | ios::app);
-	myfile << "\nWriting this to a file.\n";
-	myfile<<opponentsState << " " << wordCount<<endl;
-	myfile.close();
+//	myfile.open ("debug2.txt",ios::out | ios::app);
+//	myfile << "\nWriting this to a file.\n";
+//	myfile<<opponentsState << " " << wordCount<<endl;
+//	myfile.close();
 	switch(wordCount)
 	{
 		case 1:	// -1 indicating that the player won the game;

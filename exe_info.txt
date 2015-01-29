@@ -1,11 +1,27 @@
-																			HOW TO COMMUNICATE WITH REFEREE
+							HOW TO COMMUNICATE WITH REFEREE
+
+RUNNING THE CODE :
+__________________
+
 																			
-In order to run the .exe file with the referee just include the filename: "ConnectN.exe" from the Release folder 
+1. In order to run the ConnectN.exe file with the referee just include the filename: "ConnectN.exe" from the Release folder of the project
 in the zip file, as an argument to the Referee to be run during the tournament.
 
 For instance, if the ConnectN.exe file and the testPlayer opponent file are located at C:\courses2015spring\ use the following command to invoke the referee:
 
 					java -jar RefereeForDebug.jar "java -jar C:\courses2015spring\testPlayer1.jar" "C:\courses2015spring\ConnectN.exe" 6 7 3 10 10
 					
-				
+UNDERSTANDING THE CODE AND REFEREE COMMUNICATION:
+________________________________________________
+
+The code is simply split into classes that handle the player, board, nodes, game tree and the actual playing of the game of Connect N. 
+
+Once the initial communication is established with the referee and the configuration is read back from the referee, the game begins with
+every move of our own AI resulting in an IDDFS on the game tree which iteratively searches for the best node in the game tree and plays
+the move that resulted in the best node with a heuristic function that we formulated to rank the nodes and traverse them using the 
+minimax algorithm, where we also applied alpha beta pruning while building the game tree for any given game state of the board.
+
+Once the referee sends out a negative value the program will simply exit and can be respawned by replaying the above command 
+to start the referee with another player from the command line.
+
 NOTE: The program can only run with another player as the functionality to be played against itself has not been implemented
