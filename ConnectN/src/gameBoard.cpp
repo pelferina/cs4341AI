@@ -407,7 +407,7 @@ bool gameBoard::isFull(){
 
 //Calculates heuristics based on weighted values for each number of combos
 double gameBoard::heuristicEvaluator(){
-
+	cerr << "----HE---\n";
 	//TESTING
 	int n = getNumToWin(); //Number of pieces needed to win
 
@@ -417,30 +417,41 @@ double gameBoard::heuristicEvaluator(){
 	map<int,int> Lo = comboCounter(OPPONENT); //Number of line combos of each length 2 to n
 	map<int,int> Lp = comboCounter(PLAYER); //Number of line combos of each length
 
-	cerr <<"Lo  ||";
-	for(map<int, int>::const_iterator it = Lo.begin();
-			it != Lo.end(); ++it)
-	{
-		if(it->first != 1 && it->first != 0){
-			cerr << "+(" <<it->first<<"^2 * "<<it->second << ")";
-		}
-	}
-	cerr << "\nLp  ||";
-	for(map<int, int>::const_iterator it = Lp.begin();
-			it != Lp.end(); ++it)
-	{
-		if(it->first != 1 && it->first != 0){
-			cerr << "+(" <<it->first<<"^2 * "<<it->second << ")";
-		}
-	}
-	cerr << "\n";
+//	cerr <<"Lo  ||";
+//	for(map<int, int>::const_iterator it = Lo.begin();
+//			it != Lo.end(); ++it)
+//	{
+//		if(it->first != 1 && it->first != 0){
+//			cerr << "-" <<it->first<<"- "<<it->second << "\t";
+//		}
+//	}
+//	cerr << "\nLp  ||";
+//	for(map<int, int>::const_iterator it = Lp.begin();
+//			it != Lp.end(); ++it)
+//	{
+//		if(it->first != 1 && it->first != 0){
+//			cerr << "-" <<it->first<<"- "<<it->second << "\t";
+//		}
+//	}
+//	cerr << "\n";
 
 	if(Lo[n] >= 1 && Lp[n] >= 1){
+		cerr << "Tie\n";
 		return 100; //If both opponent and player have multiple wins, it would be a tie. This AI decides ties are better than normal moves, but worse than wins
 	}else if(Lo[n] >= 1){
-		return -1; //If opponent has a line combo of n or more, that is a loss. Worst choice
+		cerr<< "Lo wins\n";
+		if(isMyTurn){
+			return -1;
+		}else{
+			return 100;
+		} //If opponent has a line combo of n or more, that is a loss. Worst choice
 	}else if(Lp[n] >= 1){
-		return 150; //If player has line combo of n or more, that is a win. Best choice!
+		cerr << "Lp Wins\n---------\n";
+		if(isMyTurn){
+			return 150;
+		}else{
+			return -1;
+		} //If player has line combo of n or more, that is a win. Best choice!
 	}
 
 	double oval=0.1;
